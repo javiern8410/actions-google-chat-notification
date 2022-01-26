@@ -19,4 +19,4 @@ runs:
   main: dist/main.js
 branding:
   icon: 'bell'
-  color: 'green'
+  color: 'blue'
