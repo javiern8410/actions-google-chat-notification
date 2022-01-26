@@ -2,7 +2,7 @@
 
 # Google Chat Notification for GitHub Actions
 
-Sends a Google Chat notification.
+Sends a Google Chat notifications.
 
 ![Success](images/success.png "Success")
 
