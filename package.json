@@ -20,7 +20,7 @@
     "@actions/exec": "^1.0.4",
     "@actions/github": "^1.0.0",
     "@actions/glob": "^0.1.0",
-    "axios": "^0.21.1"
+    "axios": "^0.21.2"
   },
   "version": "1.0.1"
 }
