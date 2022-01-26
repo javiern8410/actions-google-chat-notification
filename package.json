@@ -1,0 +1,25 @@
+{
+  "scripts": {
+    "build": "webpack"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && git add dist/main.js"
+    }
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "husky": "^4.2.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/exec": "^1.0.4",
+    "@actions/github": "^1.0.0",
+    "@actions/glob": "^0.1.0",
+    "axios": "^0.21.1"
+  }
+}

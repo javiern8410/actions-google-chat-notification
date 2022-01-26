@@ -1,0 +1,23 @@
+---
+name: Test
+
+'on': push
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+
+      - name: Fail Action
+        id: FailAction
+        run: cat doesNotExist.txt 2> errors.txt
+
+      - name: Google Chat Notification
+        uses: colpal/actions-google-chat-notification@v1.2.0
+        with:
+          name: Build
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+          custom_text_file: errors.txt
+        if: always()
