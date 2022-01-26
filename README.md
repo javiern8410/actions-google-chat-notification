@@ -1,3 +1,5 @@
+[![Test](https://github.com/javiern8410/actions-google-chat-notification/actions/workflows/test.yml/badge.svg?branch=v1.0.0)](https://github.com/javiern8410/actions-google-chat-notification/actions/workflows/test.yml)
+
 # Google Chat Notification for GitHub Actions
 
 Sends a Google Chat notification.
@@ -15,12 +17,12 @@ Sends a Google Chat notification.
 
 ### Examples
 ```yaml
-- name: Google Chat Notification
-  uses: colpal/actions-google-chat-notification@releases/v1
+- name: google-chat-notifier
+  uses: javiern8410/actions-google-chat-notification@v1.0.0
   with:
     name: Build
     url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
     status: ${{ job.status }}
-    custom_text: 'This happened because you are bad.'
-  if: failure()
+    custom_text: 'Your custom message.'
+  if: always()
 ```
