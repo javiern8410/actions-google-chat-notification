@@ -1,4 +1,5 @@
 const github = require('@actions/github');
+
 const axios = require('axios');
 
 const statusColorPalette = (status) => {
@@ -61,16 +62,12 @@ const notify = async (name, url, status, customText) => {
                 text: `<b>${name} <font color="${statusColorPalette(status)}">${statusText(status)}</font></b>`,
               },
             },
-            {
-              textParagraph: { text: 'Click on any section for more information.' },
-            },
           ],
         },
         {
           widgets: [
             {
               keyValue: {
-                topLabel: 'Actor:',
                 content: actor,
                 iconUrl: actorAvatar,
                 onClick: {
