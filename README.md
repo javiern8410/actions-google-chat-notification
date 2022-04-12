@@ -26,3 +26,11 @@ Sends a Google Chat notifications.
     custom_text: 'Your custom message.'
   if: always()
 ```
+
+
+
+
+
+![GitHub issues](https://img.shields.io/github/issues/javiern8410/actions-google-chat-notification)
+
+[Issues page](https://github.com/javiern8410/actions-google-chat-notification/issues)
