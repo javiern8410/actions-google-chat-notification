@@ -16,7 +16,7 @@
 		"webpack-cli": "^4.9.2"
 	},
 	"dependencies": {
-		"@actions/core": "^1.6.0",
+		"@actions/core": "^1.8.0",
 		"@actions/exec": "^1.1.0",
 		"@actions/github": "^5.0.1",
 		"@actions/glob": "^0.2.0",
