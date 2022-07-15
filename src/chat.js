@@ -1,15 +1,15 @@
-const github = require("@actions/github");
+const github = require('@actions/github');
 
-const axios = require("axios");
+const axios = require('axios');
 
 const statusColorPalette = (status) => {
   switch (status) {
-    case "success":
-      return "#13d13f";
-    case "failure":
-      return "#ff0000";
-    case "cancelled":
-      return "#ffcd07";
+    case 'success':
+      return '#13d13f';
+    case 'failure':
+      return '#ff0000';
+    case 'cancelled':
+      return '#ffcd07';
     default:
       throw Error(`Invalid parameter. status=${status}.`);
   }
@@ -17,12 +17,12 @@ const statusColorPalette = (status) => {
 
 const statusText = (status) => {
   switch (status) {
-    case "success":
-      return "Succeess";
-    case "failure":
-      return "Failed";
-    case "cancelled":
-      return "Cancelled";
+    case 'success':
+      return 'Succeess';
+    case 'failure':
+      return 'Failed';
+    case 'cancelled':
+      return 'Cancelled';
     default:
       throw Error(`Invalid parameter. status=${status}.`);
   }
@@ -37,19 +37,20 @@ const textButton = (text, url) => ({
 
 const notify = async (name, url, status, customText) => {
   const { owner, repo } = github.context.repo;
-  const { eventName, sha, ref, actor } = github.context;
+  const {
+    eventName, sha, ref, actor,
+  } = github.context;
   const actorAvatar = github.context?.payload?.sender?.avatar_url;
-  const { number } = github.context?.issue;
+  const { number } = github.context.issue;
   const repoUrl = `https://github.com/${owner}/${repo}`;
-  const branch = ref.split("/").pop();
+  const branch = ref.split('/').pop();
   const refUrl = `${repoUrl}/tree/${branch}`;
-  const eventPath =
-    eventName === "pull_request" ? `/pull/${number}` : `/commit/${sha}`;
+  const eventPath = eventName === 'pull_request' ? `/pull/${number}` : `/commit/${sha}`;
   const eventUrl = `${repoUrl}${eventPath}`;
   const checksUrl = `${repoUrl}${eventPath}/checks`;
   const profileUrl = `https://github.com/${actor}`;
 
-  const customMessage = customText ? `Message:\n${customText}` : "";
+  const customMessage = customText ? `Message:\n${customText}` : '';
 
   const body = {
     cards: [
@@ -60,7 +61,7 @@ const notify = async (name, url, status, customText) => {
               {
                 textParagraph: {
                   text: `<b>${name} <font color="${statusColorPalette(
-                    status
+                    status,
                   )}">${statusText(status)}</font></b>`,
                 },
               },
@@ -81,7 +82,7 @@ const notify = async (name, url, status, customText) => {
               },
               {
                 keyValue: {
-                  topLabel: "Repository:",
+                  topLabel: 'Repository:',
                   content: `${owner}/${repo}`,
                   contentMultiline: true,
                   onClick: {
@@ -93,7 +94,7 @@ const notify = async (name, url, status, customText) => {
               },
               {
                 keyValue: {
-                  topLabel: "Event:",
+                  topLabel: 'Event:',
                   content: eventName,
                   onClick: {
                     openLink: {
@@ -104,7 +105,7 @@ const notify = async (name, url, status, customText) => {
               },
               {
                 keyValue: {
-                  topLabel: "Branch:",
+                  topLabel: 'Branch:',
                   content: branch,
                   onClick: {
                     openLink: {
@@ -121,7 +122,7 @@ const notify = async (name, url, status, customText) => {
                 textParagraph: { text: customMessage },
               },
               {
-                buttons: [textButton("OPEN CHECKS", checksUrl)],
+                buttons: [textButton('OPEN CHECKS', checksUrl)],
               },
             ],
           },
@@ -133,7 +134,7 @@ const notify = async (name, url, status, customText) => {
   const response = await axios.default.post(url, body);
   if (response.status !== 200) {
     throw new Error(
-      `Google Chat notification failed. response status=${response.status}\nResponse message=${response.data}`
+      `Google Chat notification failed. response status=${response.status}\nResponse message=${response.data}`,
     );
   }
 };
