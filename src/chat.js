@@ -40,7 +40,7 @@ const notify = async (name, url, status, customText) => {
   const {
     eventName, sha, ref, actor,
   } = github.context;
-  const actorAvatar = github.context.payload.sender.avatar_url;
+  const actorAvatar = github.context?.payload?.sender?.avatar_url;
   const { number } = github.context.issue;
   const repoUrl = `https://github.com/${owner}/${repo}`;
   const branch = ref.split('/').pop();
@@ -53,83 +53,89 @@ const notify = async (name, url, status, customText) => {
   const customMessage = customText ? `Message:\n${customText}` : '';
 
   const body = {
-    cards: [{
-      sections: [
-        {
-          widgets: [
-            {
-              textParagraph: {
-                text: `<b>${name} <font color="${statusColorPalette(status)}">${statusText(status)}</font></b>`,
+    cards: [
+      {
+        sections: [
+          {
+            widgets: [
+              {
+                textParagraph: {
+                  text: `<b>${name} <font color="${statusColorPalette(
+                    status,
+                  )}">${statusText(status)}</font></b>`,
+                },
               },
-            },
-          ],
-        },
-        {
-          widgets: [
-            {
-              keyValue: {
-                content: actor,
-                iconUrl: actorAvatar,
-                onClick: {
-                  openLink: {
-                    url: profileUrl,
+            ],
+          },
+          {
+            widgets: [
+              {
+                keyValue: {
+                  content: actor,
+                  iconUrl: actorAvatar,
+                  onClick: {
+                    openLink: {
+                      url: profileUrl,
+                    },
                   },
                 },
               },
-            },
-            {
-              keyValue: {
-                topLabel: 'Repository:',
-                content: `${owner}/${repo}`,
-                contentMultiline: true,
-                onClick: {
-                  openLink: {
-                    url: repoUrl,
+              {
+                keyValue: {
+                  topLabel: 'Repository:',
+                  content: `${owner}/${repo}`,
+                  contentMultiline: true,
+                  onClick: {
+                    openLink: {
+                      url: repoUrl,
+                    },
                   },
                 },
               },
-            },
-            {
-              keyValue: {
-                topLabel: 'Event:',
-                content: eventName,
-                onClick: {
-                  openLink: {
-                    url: eventUrl,
+              {
+                keyValue: {
+                  topLabel: 'Event:',
+                  content: eventName,
+                  onClick: {
+                    openLink: {
+                      url: eventUrl,
+                    },
                   },
                 },
               },
-            },
-            {
-              keyValue: {
-                topLabel: 'Branch:',
-                content: branch,
-                onClick: {
-                  openLink: {
-                    url: refUrl,
+              {
+                keyValue: {
+                  topLabel: 'Branch:',
+                  content: branch,
+                  onClick: {
+                    openLink: {
+                      url: refUrl,
+                    },
                   },
                 },
               },
-            },
-          ],
-        },
-        {
-          widgets: [
-            {
-              textParagraph: { text: customMessage },
-            },
-            {
-              buttons: [textButton('OPEN CHECKS', checksUrl)],
-            },
-          ],
-        },
-      ],
-    }],
+            ],
+          },
+          {
+            widgets: [
+              {
+                textParagraph: { text: customMessage },
+              },
+              {
+                buttons: [textButton('OPEN CHECKS', checksUrl)],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   };
 
   const response = await axios.default.post(url, body);
   if (response.status !== 200) {
-    throw new Error(`Google Chat notification failed. response status=${response.status}\nResponse message=${response.data}`);
+    throw new Error(
+      `Google Chat notification failed. response status=${response.status}\nResponse message=${response.data}`,
+    );
   }
 };
 
