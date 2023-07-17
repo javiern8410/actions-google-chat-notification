@@ -22,5 +22,5 @@
 		"@actions/glob": "0.4.0",
 		"axios": "1.4.0"
 	},
-	"version": "1.0.2"
+	"version": "1.0.3"
 }
