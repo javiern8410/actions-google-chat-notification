@@ -18,7 +18,7 @@ const statusColorPalette = (status) => {
 const statusText = (status) => {
   switch (status) {
     case 'success':
-      return 'Succeess';
+      return 'Success';
     case 'failure':
       return 'Failed';
     case 'cancelled':
